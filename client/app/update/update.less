@@ -1,0 +1,96 @@
+.border-rad(@radius) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.space {
+  margin-bottom: 20px;
+}
+
+//.space-pics-container {
+//  border:thin dashed lightgray;
+//  margin-bottom: 10px;
+//}
+
+.pic-container {
+  margin-bottom: 40px;
+
+  form {
+    padding-top: 5px;
+    //border-top: 10px solid lavenderblush;
+  }
+}
+
+.img-frame-update {
+  padding: 5px;
+  border: solid thin lightgray;
+  background: white;
+  .border-rad(5px);
+  margin-bottom:5px;
+
+  .img-crop-update {
+    height: 400px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height:auto;
+    }
+  }
+}
+
+.dragdrop-area {
+  padding:10px;
+  background: lighten(lightgray,10%);
+  height:400px;
+  margin-top: 50px;
+
+  &.ng-file-over {
+    background: lightgray;
+  }
+}
+
+.borderless-form {
+  border:none;
+  border-bottom: thin dashed darkgray;
+
+  &.title-form {
+    width: 400px;
+  }
+}
+
+hr.styled {
+  padding: 0;
+  border: none;
+  border-top: medium double #333;
+  color: #333;
+  text-align: center;
+}
+hr.styled:after {
+  content: "§";
+  display: inline-block;
+  position: relative;
+  top: -0.7em;
+  font-size: 1.5em;
+  padding: 0 0.25em;
+  background: white;
+}
+
+li.gridster-card {
+  overflow: hidden;
+
+  .img-frame {
+    //background: white;
+    //.border-rad(5px);
+
+    .img-crop {
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height:auto;
+      }
+    }
+  }
+}

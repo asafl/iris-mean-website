@@ -1,0 +1,20 @@
+<a ui-sref="update" ng-if="state === 'preview' || state === 'single_preview'" style="margin-left: 10px;"><span class="glyphicon glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back to edit</a>
+<div class="col-md-12">
+    <section class="row spaces-main">
+        <div gridster="gridsterOpts">
+            <ul>
+                <li gridster-item="customItemMap" id="{{item._id}}" class="gridster-card" ng-class="(state === 'spaces' || state === 'single_space')? 'pointer' : ''" ng-repeat="item in items" show-space-name-on-hover ui-sref="{{ifSpacesState}}">
+                    <div class="img-frame">
+                        <div class="img-crop">
+                            <img ng-src="data:image/jpeg;base64, {{item.img}}" alt=""/>
+                        </div>
+                    </div>
+
+                    <div class="overlay-text animated" ng-if="state === 'spaces'">
+                        <p>{{item.spaceName}}</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+</div>

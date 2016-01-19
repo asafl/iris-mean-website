@@ -1,0 +1,29 @@
+<div class="navbar navbar-default navbar-static-top" ng-controller="NavbarCtrl">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" ng-click="isCollapsed = !isCollapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand"><img src="../../assets/images/logo.png" alt="" style="height: 90px;"></a>
+        </div>
+        <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
+            <ul class="nav navbar-nav pull-right">
+                <li ng-class="{active: isActive(item.link)}" uib-dropdown>
+                    <a uib-dropdown-toggle>Spaces <span class="caret"></span></a>
+                    <ul uib-dropdown-menu>
+                        <li ng-repeat="subItem in spaces"><a ui-sref="'single_space({id:' + subItem.id + '})'">{{subItem.title}}</a></li>
+                    </ul>
+                </li>
+                <li ng-class="{active: isActive(item.link)}">
+                    <a ui-sref="about">About</a>
+                </li>
+                <li ng-class="{active: isActive(item.link)}">
+                    <a ui-sref="contact">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

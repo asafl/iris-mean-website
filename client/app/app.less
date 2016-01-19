@@ -1,0 +1,47 @@
+@import 'bootstrap/less/bootstrap.less';
+@import 'font-awesome/less/font-awesome.less';
+
+@icon-font-path: '/bower_components/bootstrap/fonts/';
+@fa-font-path: '/bower_components/font-awesome/fonts';
+
+/**
+ * App-wide Styles
+ */
+
+.browsehappy {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+#main {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+#all-content {
+    margin-top: 150px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+h1.main-title {
+    margin-top:10px;
+    //background: black;
+    //color: white;
+    //padding: 10px;
+    /* text-align: center; */
+    text-transform: uppercase;
+}
+
+// injector
+@import 'about/about.less';
+@import 'contact/contact.less';
+@import 'spaces/spaces.less';
+@import 'update/update.less';
+@import 'modal/modal.less';
+@import 'navbar/navbar.less';
+// endinjector
+

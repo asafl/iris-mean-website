@@ -1,0 +1,63 @@
+.spaces-main {
+  li.gridster-card {
+    overflow: hidden;
+    
+    .img-frame {
+      //background: white;
+      //.border-rad(5px);
+
+      .img-crop {
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height:auto;
+        }
+      }
+    }
+
+    .overlay-text {
+      position: absolute;
+      background: rgba(22, 22, 22, 0.4);
+      bottom: 0;
+      right:0;
+      left:0;
+      padding: 5px;
+      display: none;
+
+      p {
+        //text-transform: uppercase;
+        text-align: center;
+        margin: 0;
+        font-size: 1.5em;
+        color: white;
+        font-weight:100;
+      }
+    }
+  }
+}
+
+.space-details {
+  position: fixed;
+
+  .top-texts {
+    h1.space-title {
+      margin-top:10px;
+      background: black;
+      color: white;
+      padding: 10px;
+      /* text-align: center; */
+      text-transform: uppercase;
+    }
+
+    h4.about {
+      margin-top:20px;
+      text-align: justify;
+    }
+  }
+
+  .bottom-texts {
+    position: absolute;
+    bottom:20px;
+  }
+}

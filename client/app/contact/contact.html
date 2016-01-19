@@ -1,0 +1,45 @@
+<div class="col-md-12">
+    <section class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1 class="main-title">Contact Us</h1>
+                <h4>We should definitely work together. Drop us a line and we'll get back to you.</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <uib-alert ng-show="response == 1"  type="success">email sent successfully!</uib-alert>
+                <uib-alert ng-show="response == 2" type="danger">There was a problem sending your message. Please try again!</uib-alert>
+            </div>
+        </div>
+        <div class="row" style="margin-top:30px;">
+            <!--<div class="col-sm-4">-->
+                <!--<address>-->
+                    <!--<strong>Email:</strong> <a href="mailto:#"> contact@irisbenado.com</a><br /><br />-->
+                    <!--&lt;!&ndash;<strong>Telephone:</strong> + 972 - 3 - 6407542<br /><br />&ndash;&gt;-->
+                <!--</address>-->
+            <!--</div>-->
+
+            <div class="col-sm-12 contact-form">
+                <form id="contact" class="form" role="form">
+                    <div class="row">
+                        <div class="col-xs-6 col-md-6 form-group">
+                            <input class="form-control borderless" placeholder="Name" type="text" ng-model="mail.name" required autofocus />
+                        </div>
+                        <div class="col-xs-6 col-md-6 form-group">
+                            <input class="form-control borderless" placeholder="Email" type="email" ng-model="mail.email" required />
+                        </div>
+                    </div>
+                    <textarea class="form-control borderless" placeholder="Message" rows="5" ng-model="mail.message"></textarea>
+                    <br />
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 form-group">
+                            <button class="btn btn-primary pull-right submit-button" type="submit" ng-click="sendMail()">Send</button>
+                        </div>
+                    </div>
+                </form>
+            </div> <!--grid-->
+        </div> <!--row-->
+    </section> <!--non-fluid container -->
+
+</div>

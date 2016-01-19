@@ -1,0 +1,84 @@
+<div class="col-md-12" style="padding-bottom: 50px">
+    <section class="row">
+        <button class="btn btn-primary btn-lg col-sm-offset-5 col-sm-2" ui-sref="preview">Edit main page</button>
+    </section>
+    <div class="space" ng-repeat="space in spaces">
+        <section class="row">
+            <div class="col-sm-2">
+                <h2><strong>Space Name:</strong></h2>
+            </div>
+            <div class="col-sm-10">
+                <h2><input type="text" class="borderless-form title-form" ng-model="space.name" ng-model-options="{debounce: 1500}" ng-change="updateSpaceDetails(space)">
+                    <button class="btn btn-danger pull-right" ng-click="deleteSpace(space, $index)">Delete Space</button>
+                </h2>
+            </div>
+            <div class="col-sm-2">
+                <h4><strong>Credits:</strong></h4>
+            </div>
+            <div class="col-sm-10">
+                <h4><input type="text" class="borderless-form title-form" ng-model="space.credits" ng-model-options="{debounce: 1500}" ng-change="updateSpaceDetails(space)"></h4>
+            </div>
+            <div class="col-sm-2">
+                <h4><strong>About:</strong></h4>
+            </div>
+            <div class="col-sm-10">
+                <h4><textarea class="form-control" ng-model-options="{debounce: 1500}" ng-change="updateSpaceDetails(space)" rows="3" ng-model="space.about"></textarea>
+                </h4>
+            </div>
+        </section>
+        <hr/>
+        <!-- Here come the pics -->
+        <section class="row">
+            <div class="space-pics-container clearfix">
+                <div class="col-xs-3 pic-container" ng-repeat="image in space.images">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" style="text-align: left;">Info</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="borderless-form" ng-model="image.info" ng-model-options="{debounce: 1500}" ng-change="updateImageDetails(space, image)">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" style="text-align: left;">Credits</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="borderless-form" ng-model="image.credits" ng-model-options="{debounce: 1500}" ng-change="updateImageDetails(space, image)">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" ng-model="image.main" ng-true-value="true" ng-false-value="false" ng-change="mainCheckboxChanged(space, image)"> Main picture for space
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="img-frame-update">
+                        <div class="img-crop-update">
+                            <img ng-src="data:image/jpeg;base64,{{image.img}}">
+                            <!--<div class="hover-delete" ng-click="deleteImage(album, img.url, $index)"><h3>&times;</h3></div>-->
+                        </div>
+                    </div>
+                    <button class="btn btn-danger" ng-click="deleteImage(space, image, $index)">Delete picture</button>
+                </div>
+                <div class="col-xs-3 pic-container">
+                    <div class="img-frame-udpate">
+                        <div class="img-crop-update dragdrop-area" ngf-drop="uploadFiles($files, space)" ngf-drag-over-class="'ng-file-over'" ngf-multiple="true" ngf-pattern="'image/*'">
+                            <p>Drag and drop here one or several images to add them to the album.</p>
+                            <h1 style="text-align: center; margin-top: 50px;"><i class="fa fa-folder-open"></i></h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="row">
+            <button class="btn btn-info col-sm-offset-5 col-sm-2" ui-sref="single_preview({id: space._id})">Edit this space</button>
+        </section>
+        <hr class="styled"/>
+    </div> <!-- A SPACE -->
+
+
+    <button class="btn btn-success" ng-click="createNewSpace()">Create New Space</button>
+</div>
+

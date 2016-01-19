@@ -1,0 +1,52 @@
+'use strict';
+
+angular.module('irisBenadoArchitectsApp')
+  .controller('SpacesCtrl_obsolete', function ($scope, spacesService) {
+      $scope.gridsterOpts = {
+          resizable: {
+              enabled: false
+          },
+          draggable: {
+              enabled: false
+          }
+      };
+
+      $scope.customItemMap = {
+          sizeX: 'item.sizeX',
+          sizeY: 'item.sizeY',
+          row: 'item.row',
+          col: 'item.col'
+      };
+
+      $scope.items = [];
+
+      // get the showcase for spaces
+      spacesService.loadAllSpaces1Pic().then(function (res) {
+          res.data.forEach(function(space) {
+              $scope.items.push(space.images[0]);
+          });
+      });
+
+  });
+
+
+
+
+//
+//// dynamically prepare images
+//var totalCols = 6;
+//var minCols = 2;
+//var maxCols = 3;
+//var minRows = 1;
+//var maxRows = 2;
+
+////var currRow = 0;
+//var currCol = 0;
+//$scope.spaces.forEach(function (space) {
+//
+//    // add the attributes
+//    space.sizeX = Math.random() > 0.5 ? minRows : maxRows;
+//    space.sizeY = Math.random() > 0.5 ? minCols : maxCols;
+//    space.col = (currCol + space.sizeY) % totalCols;
+//    currCol = space.col;
+//});
