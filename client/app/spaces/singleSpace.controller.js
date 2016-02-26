@@ -10,7 +10,9 @@ angular.module('irisBenadoArchitectsApp')
 			},
 			draggable: {
 				enabled: false
-			}
+			},
+			rowHeight: 50,
+			margins: [10,10]
 		};
 
 

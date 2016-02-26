@@ -1,13 +1,27 @@
 <div class="col-md-2 space-details" height-to-window>
     <section class="top-texts">
         <h1 class="space-title">{{space.name}}</h1>
+        <h4><strong>CREDITS&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{space.credits}}</h4>
+        <!--<a class="show-before pointer" show-before-pane>Show before pictures</a>-->
         <h4 class="about">{{space.about}}</h4>
     </section>
-    <section class="bottom-texts">
-        <h4><strong>CREDITS | </strong>{{space.credits}}</h4>
-    </section>
+    <!--<section class="bottom-texts">-->
+        <!--<h4><strong>CREDITS&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{space.credits}}</h4>-->
+    <!--</section>-->
 </div>
 <div class="col-md-10 col-md-offset-2">
+    <!-- BEFORE PICS SECTION -->
+    <div class="col-sm-12 before-pics animated">
+        <div class="close pointer" hide-before-pane>X</div>
+        <section class="row">
+            <div class="img-frame" ng-repeat="image in beforeImages">
+                <div class="img-crop">
+                    <img ng-src="data:image/jpeg;base64, {{image.img}}" alt=""/>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- REGULAR (AFTER PICS SECTION) -->
     <section class="row">
         <div class="col-md-12">
             <section class="row spaces-main">

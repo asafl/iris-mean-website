@@ -1,12 +1,19 @@
 'use strict';
 
 angular.module('irisBenadoArchitectsApp')
-	.controller('NavbarCtrl', function ($scope, $state, spacesService) {
+	.controller('NavbarCtrl', function ($scope, $state, spacesService, $timeout) {
+
+		$timeout(function () { // wait for a second and then check current state
+			if ($state.current.name == 'update') {
+
+			}
+		}, 1000);
+
 
 		$scope.menu = [
 			{
 				'title': 'Spaces',
-				'state': '.',
+				'state': '',
 				'subMenu': []
 			},
 			{

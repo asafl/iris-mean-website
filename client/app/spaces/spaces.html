@@ -1,17 +1,21 @@
+<!-- MESSAGE TO NOFITY UPDATE MODE -->
+<uib-alert ng-if="state === 'preview' || state === 'single_preview'" type="info" close="closeAlert($index)">YOU ARE IN UPDATE MODE!</uib-alert>
+<!-- BACK TO MAIN UPDATE PAGE -->
 <a ui-sref="update" ng-if="state === 'preview' || state === 'single_preview'" style="margin-left: 10px;"><span class="glyphicon glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back to edit</a>
+<!-- START OF SPACES PAGE -->
 <div class="col-md-12">
     <section class="row spaces-main">
         <div gridster="gridsterOpts">
             <ul>
-                <li gridster-item="customItemMap" id="{{item._id}}" class="gridster-card" ng-class="(state === 'spaces' || state === 'single_space')? 'pointer' : ''" ng-repeat="item in items" show-space-name-on-hover ui-sref="{{ifSpacesState}}">
+                <li gridster-item="customItemMap" id="{{item._id}}" class="gridster-card" ng-class="(state === 'spaces' || state === 'single_space')? 'pointer' : ''" ng-repeat="item in items" show-space-name-on-hover hover-item-class="space-name-badge" ui-sref="{{ifSpacesState}}">
                     <div class="img-frame">
                         <div class="img-crop">
                             <img ng-src="data:image/jpeg;base64, {{item.img}}" alt=""/>
                         </div>
                     </div>
 
-                    <div class="overlay-text animated" ng-if="state === 'spaces'">
-                        <p>{{item.spaceName}}</p>
+                    <div class="space-name-badge animated" ng-if="state === 'spaces'">
+                        <p vertically-center-to-parent>{{item.spaceName}}</p>
                     </div>
                 </li>
             </ul>

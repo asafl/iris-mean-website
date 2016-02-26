@@ -7,19 +7,21 @@ angular.module('irisBenadoArchitectsApp')
 		$scope.state = $state.current.name;
 		$scope.ifSpacesState = '.';
 
+		$scope.gridsterOpts = {
+			rowHeight: 50,
+			margins: [10,10]
+		};
+
 		// set updatability depending on if we're in preview mode or in prod mode (depending of the url)
 		if ($scope.state === 'spaces') {
 			// should be non-updateable
-			$scope.gridsterOpts = {
-				resizable: {
+			$scope.gridsterOpts["resizable"] = {
 					enabled: false
-				},
-				draggable: {
+				};
+			$scope.gridsterOpts["draggable"] = {
 					enabled: false
 				}
-			};
 		} // else it is updateable by default
-
 
 		if ($stateParams.id) {
 			// this is a preview of a single space

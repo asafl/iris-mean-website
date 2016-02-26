@@ -17,6 +17,8 @@ angular.module('irisBenadoArchitectsApp', [
 		$locationProvider.html5Mode(true);
 	})
 	.config(function (LightboxProvider) {
+		LightboxProvider.templateUrl = '../components/lightbox/lightbox.html';
+
 		LightboxProvider.getImageUrl = function (image) {
 			return 'data:image/jpeg;base64,' + image.img;
 		};
@@ -24,4 +26,8 @@ angular.module('irisBenadoArchitectsApp', [
 		LightboxProvider.getImageCaption = function (image) {
 			return image.info;
 		};
+
+		LightboxProvider.getImageCredits = function (image) {
+			return image.credits;
+		}
 	});

@@ -396,7 +396,7 @@ module.exports = function (grunt) {
       },
       openshift: {
         options: {
-          remote: 'ssh://56a3c26a2d5271934700000a@nodejs-asaflib.rhcloud.com/~/git/nodejs.git/',
+          remote: 'openshift',
           branch: 'master'
         }
       }

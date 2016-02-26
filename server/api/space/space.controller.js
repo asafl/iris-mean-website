@@ -4,11 +4,10 @@ var _ = require('lodash');
 var Space = require('./space.model');
 var fs = require('fs');
 var url = require('url');
-//var Imagemin = require('imagemin');
-//var imagemin = require('image-min');
+//var sharp = require('sharp');
 
 var path = require('path');
-var sharp = require('sharp');
+var lwip = require('lwip');
 var Q = require('q');
 
 // Get list of spaces
@@ -91,20 +90,38 @@ exports.addImage = function(req,res) {
 
   files.forEach(function (file) {
 
-    var original_data = fs.readFileSync(file.path);
+    //var original_data = fs.readFileSync(file.path);
 
     // create a promise and push it into array of promises
     var savePromise = Q.defer();
     arrayOfPromises.push(savePromise.promise);
 
-    sharp(original_data)
-        .resize(940, 940)
-        .max()
-        .toFormat('jpeg')
-        .compressionLevel(6)
-        .trellisQuantisation()
-        .toBuffer(function (err, buffer, info) {
+    lwip.open(file.path, function (err, image) {
+      if (err) { return handleError(res, err); }
 
+      var widthScale, heightScale;
+      var imHeight = image.height();
+      var imWidth = image.width();
+
+      // setup scaling factors
+      if (imWidth > 940 || imHeight > 940) { // if the image is too big
+        if (imWidth > imHeight) { // scale the width to be 940px
+          widthScale = 940 / imWidth;
+          heightScale = widthScale;
+        } else { // scale the height to be 940px
+          heightScale = 940 / imHeight;
+          widthScale = heightScale;
+        }
+      } else {
+        widthScale = 1;
+        heightScale = 1;
+      }
+
+      console.log(widthScale, heightScale);
+
+      image.batch()
+        .scale(widthScale, heightScale)
+        .toBuffer('jpg', {quality: 70}, function (err, buffer) {
           if (err) { return handleError(res, err); }
 
           // save image in db as base64 encoded - this limits the image size
@@ -129,19 +146,19 @@ exports.addImage = function(req,res) {
             rowMain: 0
           };
 
-          Space.update({_id: req.params.id}, { $push: { images: tempIm } }, function (err) {
-            if (err) { return handleError(res, err); }
+          Space.update({_id: req.params.id}, {$push: {images: tempIm}}, function (err) {
+            if (err) {
+              return handleError(res, err);
+            }
 
             // get image to send back to server
             Space.findById(req.params.id, function (err, space) {
-              arrayOfImages.push(space.images[space.images.length-1]);
+              arrayOfImages.push(space.images[space.images.length - 1]);
               savePromise.resolve();
             });
-
           });
-
-        });
-
+        })
+      });
   });
 
   // if all promises were resolved...
@@ -293,3 +310,11 @@ function handleError(res, err) {
 //    .pipe(fs.createWriteStream(path.dirname(src.path) + '/img-minified' + ext));
 
 
+//sharp(original_data)
+//    .resize(940, 940)
+//    .max()
+//    .toFormat('jpeg')
+//    .compressionLevel(6)
+//    .trellisQuantisation()
+//    .toBuffer(function (err, buffer, info) {
+//if (err) { return handleError(res, err); }
