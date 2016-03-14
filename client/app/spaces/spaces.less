@@ -87,8 +87,10 @@
 
 .space-details {
   position: fixed;
+  overflow: auto;
 
   .top-texts {
+
     h1.space-title-black-bg {
       margin-top:10px;
       background: black;
@@ -107,7 +109,8 @@
       text-transform: uppercase;
     }
 
-    h4.about {
+    .about {
+      line-height: 1.2em;
       margin-top:20px;
       text-align: justify;
     }
@@ -137,9 +140,11 @@
   }
 
   .img-frame {
-    border: thin solid darkgrey;
+    //border: thin solid darkgrey;
+    padding:10px;
 
     .img-crop {
+      height: 280px;
       overflow: hidden;
 
       img {

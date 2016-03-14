@@ -2,8 +2,8 @@
     <section class="top-texts">
         <h1 class="space-title">{{space.name}}</h1>
         <h4><strong>CREDITS&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{space.credits}}</h4>
-        <!--<a class="show-before pointer" show-before-pane>Show before pictures</a>-->
-        <h4 class="about">{{space.about}}</h4>
+        <a class="show-before pointer" show-before-pane ng-if="beforeImages.length > 0">Show before pictures</a>
+        <p class="about">{{space.about}}</p>
     </section>
     <!--<section class="bottom-texts">-->
         <!--<h4><strong>CREDITS&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{space.credits}}</h4>-->
@@ -11,10 +11,10 @@
 </div>
 <div class="col-md-10 col-md-offset-2">
     <!-- BEFORE PICS SECTION -->
-    <div class="col-sm-12 before-pics animated">
+    <div class="col-sm-12 before-pics animated slideOutUp">
         <div class="close pointer" hide-before-pane>X</div>
         <section class="row">
-            <div class="img-frame" ng-repeat="image in beforeImages">
+            <div class="img-frame col-sm-2" ng-repeat="image in beforeImages" ng-click="openLightboxModal(beforeImages, $index)">
                 <div class="img-crop">
                     <img ng-src="data:image/jpeg;base64, {{image.img}}" alt=""/>
                 </div>
@@ -28,7 +28,7 @@
                 <div gridster="gridsterOpts">
                     <ul>
                         <li gridster-item="customItemMap" class="gridster-card pointer"
-                            ng-repeat="image in space.images" ng-click="openLightboxModal($index)">
+                            ng-repeat="image in afterImages" ng-click="openLightboxModal(afterImages, $index)">
                             <div class="img-frame">
                                 <div class="img-crop">
                                     <img ng-src="data:image/jpeg;base64, {{image.img}}" alt=""/>

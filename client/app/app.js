@@ -17,7 +17,7 @@ angular.module('irisBenadoArchitectsApp', [
 		$locationProvider.html5Mode(true);
 	})
 	.config(function (LightboxProvider) {
-		LightboxProvider.templateUrl = '../components/lightbox/lightbox.html';
+		//LightboxProvider.templateUrl = '../components/lightbox/lightbox.html'; USED INLINE IN FILE INSTEAD
 
 		LightboxProvider.getImageUrl = function (image) {
 			return 'data:image/jpeg;base64,' + image.img;

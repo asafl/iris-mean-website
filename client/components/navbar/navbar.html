@@ -10,10 +10,12 @@
             <a href="/" class="navbar-brand"><img src="../../assets/images/logo.png" alt="" style="height: 90px;"></a>
         </div>
         <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
+            <!-- Menu items -->
             <ul class="nav navbar-nav pull-right">
                 <li ng-repeat="item in menu" ng-class="{active: isActive(item.state)}" uib-dropdown>
                     <!--<a ng-href="{{item.link}}">{{item.title}}</a>-->
                     <a ui-sref="{{item.state}}" class="pointer" uib-dropdown-toggle>{{item.title}} <span class="caret" ng-if="item.subMenu"></span></a>
+                    <!-- Submenu items  -->
                     <ul ng-if="item.subMenu" uib-dropdown-menu>
                         <li ng-repeat="subItem in item.subMenu">
                             <a ng-href="/spaces{{subItem._id}}" class="pointer">

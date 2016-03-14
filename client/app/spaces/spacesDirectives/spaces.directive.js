@@ -12,7 +12,7 @@ angular.module('irisBenadoArchitectsApp')
 				};
 				// check for changes in window dimensions on every digest cycle
 				scope.$watch(scope.getWindowDimensions, function (newValue) {
-					element.attr('style', 'min-height: ' + (newValue.h - 0.1 * newValue.h) + 'px');
+					element.attr('style', 'height: ' + (newValue.h - 0.1 * newValue.h) + 'px');
 				}, true);
 			}
 		};

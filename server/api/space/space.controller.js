@@ -117,8 +117,6 @@ exports.addImage = function(req,res) {
         heightScale = 1;
       }
 
-      console.log(widthScale, heightScale);
-
       image.batch()
         .scale(widthScale, heightScale)
         .toBuffer('jpg', {quality: 70}, function (err, buffer) {

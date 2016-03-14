@@ -89,6 +89,7 @@ angular.module('irisBenadoArchitectsApp')
 				info: updatedImage.info,
 				credits: updatedImage.credits,
 				main: updatedImage.main,
+				before: updatedImage.before,
 				sizeXMain: updatedImage.sizeXMain,
 				sizeYMain: updatedImage.sizeYMain,
 				rowMain: updatedImage.rowMain,

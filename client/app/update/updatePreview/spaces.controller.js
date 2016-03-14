@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('irisBenadoArchitectsApp')
-	.controller('SpacesCtrl', function ($scope, $stateParams, spacesService, $state) {
+	.controller('SpacesCtrl', function ($scope, $stateParams, spacesService, $state, $timeout) {
 
 		$scope.items = [];
 		$scope.state = $state.current.name;
@@ -63,36 +63,44 @@ angular.module('irisBenadoArchitectsApp')
 		}
 
 
-
 		// update image upon moving / resizing it... IT WAS HORRIBLE TO BUILD! moving through the gridster-item directive.
-		// TODO: update only if item changed (hard because the change is directly inside the item, so there's nothing to compare to
+		// TODO: Add timeout before updating and check - because of the new short stops, the update jumps too much
 		var imageUpdateItem;
+		var to;
 		$scope.updateImage = function (imageToUpdate, imageId) {
-			// check if this is a single space or main preview
-			if ($stateParams.id) { // single space
-				imageUpdateItem = {
-					sizeX: imageToUpdate.sizeX,
-					sizeY: imageToUpdate.sizeY,
-					row: imageToUpdate.row,
-					col: imageToUpdate.col,
-					_id: imageId
-				};
+			if (to) $timeout.cancel(to);
 
-				spacesService.updateImageDetails($stateParams.id, imageUpdateItem);
+			to = $timeout (function () {
+				// check if this is a single space or main preview
+				if ($stateParams.id) { // single space
+					imageUpdateItem = {
+						sizeX: imageToUpdate.sizeX,
+						sizeY: imageToUpdate.sizeY,
+						row: imageToUpdate.row,
+						col: imageToUpdate.col,
+						_id: imageId
+					};
 
-			} else { // main spaces view
-				imageUpdateItem = {
-					sizeXMain: imageToUpdate.sizeX,
-					sizeYMain: imageToUpdate.sizeY,
-					rowMain: imageToUpdate.row,
-					colMain: imageToUpdate.col,
-					_id: imageId
-				};
+					console.log("single space page:",imageUpdateItem);
 
-				var spaceId = _.find($scope.items, { '_id': imageId}).spaceId;
+					spacesService.updateImageDetails($stateParams.id, imageUpdateItem);
 
-				spacesService.updateImageDetails(spaceId, imageUpdateItem);
-			}
+				} else { // main spaces view
+					imageUpdateItem = {
+						sizeXMain: imageToUpdate.sizeX,
+						sizeYMain: imageToUpdate.sizeY,
+						rowMain: imageToUpdate.row,
+						colMain: imageToUpdate.col,
+						_id: imageId
+					};
+
+					var spaceId = _.find($scope.items, { '_id': imageId}).spaceId;
+
+					console.log("all spaces page:",imageUpdateItem);
+
+					spacesService.updateImageDetails(spaceId, imageUpdateItem);
+				}
+			}, 1000);
 		};
 
 	});
@@ -107,3 +115,27 @@ angular.module('irisBenadoArchitectsApp')
 //	// image change - update!
 //	console.log("changed");
 //}
+//var identicalImages = function (newImage, imageToCompare, single) {
+//	// first comparing gridster values:
+//	if (single) { // compare as main images - this image was updated from an "all spaces" state
+//		console.log('single');
+//		if (newImage.sizeX !== imageToCompare.sizeX ||
+//			newImage.sizeY !== imageToCompare.sizeY ||
+//			newImage.row !== imageToCompare.row ||
+//			newImage.col !== imageToCompare.col) {
+//			return false;
+//		}
+//	} else { // compare as regular images
+//		console.log('all');
+//		if (newImage.sizeX !== imageToCompare.sizeXMain ||
+//			newImage.sizeY !== imageToCompare.sizeYMain ||
+//			newImage.row !== imageToCompare.rowMain ||
+//			newImage.col !== imageToCompare.colMain) {
+//			return false;
+//		}
+//	}
+//
+//	return true;
+//};
+//
+//

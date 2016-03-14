@@ -13,6 +13,7 @@ var SpaceSchema = new Schema({
             info: String,
             credits: String,
             main: {type: Boolean, default: false},
+            before: {type: Boolean, default: false},
             sizeX: {type: Number, default: 3},
             sizeXMain: {type: Number, default: 3},
             sizeY: {type: Number, default: 2},

@@ -19,7 +19,11 @@ angular.module('irisBenadoArchitectsApp')
 			restrict: 'EA',
 			link: function (scope, element) {
 				element.bind('click', function () {
-					$('.before-pics').removeClass('slideOutUp').css('display', 'block').addClass('slideInDown');
+					if ($('.before-pics').hasClass('slideOutUp')) { // it's out of view - show it
+						$('.before-pics').removeClass('slideOutUp').css('display', 'block').addClass('slideInDown');
+					} else { // it's currently shown, hide it
+						$('.before-pics').addClass('slideOutUp');
+					}
 				});
 			}
 		};
