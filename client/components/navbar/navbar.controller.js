@@ -3,18 +3,17 @@
 angular.module('irisBenadoArchitectsApp')
 	.controller('NavbarCtrl', function ($scope, $state, spacesService, $timeout) {
 
-		$timeout(function () { // wait for a second and then check current state
-			if ($state.current.name == 'update') {
-
-			}
-		}, 1000);
+		//$timeout(function () { // wait for a second and then check current state
+		//	if ($state.current.name == 'update') {
+		//		//
+		//	}
+		//}, 10);
 
 
 		$scope.menu = [
 			{
 				'title': 'Spaces',
-				'state': '',
-				'subMenu': []
+				'state': ''
 			},
 			{
 				'title': 'About',
@@ -26,17 +25,20 @@ angular.module('irisBenadoArchitectsApp')
 			}
 		];
 
+
 		spacesService.loadAllSpaces1Pic().then(function (spaces) {
-			// first push the "all" object
-			$scope.menu[0].subMenu.push({
-				name: 'All',
-				_id: ''
-			});
+			// Create the array and push the "all" object
+			$scope.spacesSubMenu = [
+				{
+					name: 'All',
+					state: 'spaces'
+				}
+			];
 
 			spaces.forEach(function (space) {
-				$scope.menu[0].subMenu.push({
+				$scope.spacesSubMenu.push({
 					name: space.name,
-					_id: '/' + space._id
+					state: 'single_space({id: "' + space._id + '"})'
 				});
 			});
 
