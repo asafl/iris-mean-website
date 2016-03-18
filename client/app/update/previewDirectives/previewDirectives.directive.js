@@ -6,10 +6,11 @@ angular.module('irisBenadoArchitectsApp')
 			restrict: 'EA',
 			link: function (scope, element, attrs) {
 				element.bind('mouseenter', function () {
-					$(element).children('.' + attrs.hoverItemClass).removeClass('flipOutX').css('display', 'block').addClass('flipInX');
+					//flipOutX
+					$(element).children('.' + attrs.hoverItemClass).removeClass('slideOutDown').css('display', 'block').addClass('slideInUp');
 				});
 				element.bind('mouseleave', function () {
-					$(element).children('.' + attrs.hoverItemClass).addClass('flipOutX');
+					$(element).children('.' + attrs.hoverItemClass).addClass('slideOutDown');
 				});
 			}
 		};

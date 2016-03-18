@@ -30,6 +30,7 @@ angular.module('irisBenadoArchitectsApp')
 			if (files && files.length) {
 				spacesService.uploadImages(space._id, files).then(function (res) {
 					res.data.forEach(function (image) {
+						console.log(image);
 						space.images.push(image);
 					});
 				});

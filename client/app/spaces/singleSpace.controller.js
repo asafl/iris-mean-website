@@ -15,10 +15,9 @@ angular.module('irisBenadoArchitectsApp')
 			margins: [10,10]
 		};
 
-
-		// this is a showxase of all pics a single space - THIS IS NOT A PREVIEW CONTROLLER
-		//spacesService.loadSpace($stateParams.id).then(function (res) { // WHY SHOULD I USE IT IF ALL SPACES ARE LOADED ANYWAY ON THE FIRST SCREEN (EXACTLY TO SAVE THIS PART!!!)
+		// this is a showcase of all pics a single space - THIS IS NOT A PREVIEW CONTROLLER
 		spacesService.loadAllSpacesWithImages().then(function (res) {
+
 			// different parameters for main view and for separate space view (one's position and sizes for all spaces, the other for single)
 			$scope.customItemMap = {
 				sizeX: 'image.sizeX',

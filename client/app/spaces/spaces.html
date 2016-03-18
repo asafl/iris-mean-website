@@ -7,15 +7,15 @@
     <section class="row spaces-main">
         <div gridster="gridsterOpts">
             <ul>
-                <li gridster-item="customItemMap" id="{{item._id}}" class="gridster-card" ng-class="(state === 'spaces' || state === 'single_space')? 'pointer' : ''" ng-repeat="item in items" show-space-name-on-hover hover-item-class="space-name-badge" ui-sref="{{ifSpacesState}}">
+                <li gridster-item="customItemMap" id="{{item._id}}" class="gridster-card" ng-class="(state === 'spaces' || state === 'single_space')? 'pointer' : ''" ng-repeat="item in items" show-space-name-on-hover hover-item-class="overlay-text" ui-sref="{{ifSpacesState}}">
                     <div class="img-frame">
                         <div class="img-crop">
                             <img ng-src="data:image/jpeg;base64, {{item.img}}" alt=""/>
                         </div>
                     </div>
 
-                    <div class="space-name-badge animated" ng-if="state === 'spaces'">
-                        <p vertically-center-to-parent>{{item.spaceName}}</p>
+                    <div class="overlay-text animated" ng-if="state === 'spaces'">
+                        <p >{{item.spaceName}}</p><!-- vertically-center-to-parent -->
                     </div>
                 </li>
             </ul>

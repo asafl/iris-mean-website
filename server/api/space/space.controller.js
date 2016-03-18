@@ -134,6 +134,7 @@ exports.addImage = function(req,res) {
             info: "",
             credits: "",
             main: false,
+            before: false,
             sizeX: 3,
             sizeXMain: 3,
             sizeY: 2,
@@ -151,7 +152,9 @@ exports.addImage = function(req,res) {
 
             // get image to send back to server
             Space.findById(req.params.id, function (err, space) {
-              arrayOfImages.push(space.images[space.images.length - 1]);
+              // find the newly inserted image by the crappiest of methods (and the only one that works with nested arrays (getting last image didn't work)), by the base64 img
+              var newIm = _.find(space.images, {img: tempIm.img});
+              arrayOfImages.push(newIm);
               savePromise.resolve();
             });
           });

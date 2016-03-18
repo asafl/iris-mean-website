@@ -2,6 +2,7 @@
 
 angular.module('irisBenadoArchitectsApp')
 	.controller('SpacesCtrl', function ($scope, $stateParams, spacesService, $state, $timeout) {
+		// USED FOR: ALL SPACES, ALL SPACES PREVIEW, SINGLE SPACE PREVIEW (STRANGE)
 
 		$scope.items = [];
 		$scope.state = $state.current.name;
@@ -38,7 +39,7 @@ angular.module('irisBenadoArchitectsApp')
 
 			});
 		} else {
-			// this is a preview of the main page
+			// this is a preview of the all spaces page
 			spacesService.loadAllSpaces1Pic().then(function (res) {
 				// different parameters for main view and for separate space view
 				$scope.customItemMap = {
@@ -49,7 +50,7 @@ angular.module('irisBenadoArchitectsApp')
 				};
 
 				res.forEach(function (space) {
-					// add id and name to item
+					// add the SPACE id and name to each separate images object
 					space.images[0].spaceId = space._id; // ['spaceId']
 					space.images[0].spaceName = space.name; // ['spaceName']
 					$scope.items.push(space.images[0]);
@@ -64,7 +65,6 @@ angular.module('irisBenadoArchitectsApp')
 
 
 		// update image upon moving / resizing it... IT WAS HORRIBLE TO BUILD! moving through the gridster-item directive.
-		// TODO: Add timeout before updating and check - because of the new short stops, the update jumps too much
 		var imageUpdateItem;
 		var to;
 		$scope.updateImage = function (imageToUpdate, imageId) {
