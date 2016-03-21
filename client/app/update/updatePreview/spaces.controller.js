@@ -63,14 +63,13 @@ angular.module('irisBenadoArchitectsApp')
 			});
 		}
 
-
 		// update image upon moving / resizing it... IT WAS HORRIBLE TO BUILD! moving through the gridster-item directive.
 		var imageUpdateItem;
 		var to;
 		$scope.updateImage = function (imageToUpdate, imageId) {
-			if (to) $timeout.cancel(to);
-
-			to = $timeout (function () {
+			//if (to) $timeout.cancel(to);
+			//
+			//to = $timeout (function () { // USING TIME OUT CAUSES THE WRONG UPDATE TO BE SENT. HOW DO WE ONLY SEND THE LAST ONE?
 				// check if this is a single space or main preview
 				if ($stateParams.id) { // single space
 					imageUpdateItem = {
@@ -81,7 +80,7 @@ angular.module('irisBenadoArchitectsApp')
 						_id: imageId
 					};
 
-					console.log("single space page:",imageUpdateItem);
+					//console.log("single space page:",imageUpdateItem);
 
 					spacesService.updateImageDetails($stateParams.id, imageUpdateItem);
 
@@ -96,11 +95,12 @@ angular.module('irisBenadoArchitectsApp')
 
 					var spaceId = _.find($scope.items, { '_id': imageId}).spaceId;
 
-					console.log("all spaces page:",imageUpdateItem);
+					//console.log("all spaces page:",imageUpdateItem);
 
 					spacesService.updateImageDetails(spaceId, imageUpdateItem);
 				}
-			}, 1000);
+			//}, 1000);
+
 		};
 
 	});

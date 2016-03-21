@@ -18,7 +18,7 @@ angular.module('irisBenadoArchitectsApp')
 		// this is a showcase of all pics a single space - THIS IS NOT A PREVIEW CONTROLLER
 		spacesService.loadAllSpacesWithImages().then(function (res) {
 
-			// different parameters for main view and for separate space view (one's position and sizes for all spaces, the other for single)
+			// different parameters for main view a for separate space view (one's position and sizes for all spaces, the other for single)
 			$scope.customItemMap = {
 				sizeX: 'image.sizeX',
 				sizeY: 'image.sizeY',
