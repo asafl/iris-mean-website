@@ -11,9 +11,15 @@ angular.module('irisBenadoArchitectsApp')
 			draggable: {
 				enabled: false
 			},
-			rowHeight: 50,
-			margins: [10,10]
+			columns: 18,
+			margins: [10,10],
 		};
+
+
+		$scope.$on('gridster-resized', function(sizes, gridster) {
+			// adjust sizes
+
+		});
 
 		// this is a showcase of all pics a single space - THIS IS NOT A PREVIEW CONTROLLER
 		spacesService.loadAllSpacesWithImages().then(function (res) {

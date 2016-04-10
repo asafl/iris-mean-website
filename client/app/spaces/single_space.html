@@ -1,7 +1,7 @@
 <div class="col-md-2 space-details" height-to-window>
     <section class="top-texts">
         <h1 class="space-title">{{space.name}}</h1>
-        <h4><strong>CREDITS&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{space.credits}}</h4>
+        <h4 ng-if="space.credits.length > 0"><strong>CREDITS&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{space.credits}}</h4>
         <a class="show-before pointer" show-before-pane ng-if="beforeImages.length > 0">Show before pictures</a>
         <p class="about">{{space.about}}</p>
     </section>

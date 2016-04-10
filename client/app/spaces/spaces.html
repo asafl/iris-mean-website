@@ -1,5 +1,7 @@
 <!-- MESSAGE TO NOFITY UPDATE MODE -->
-<uib-alert ng-if="state === 'preview' || state === 'single_preview'" type="info" close="closeAlert($index)">YOU ARE IN UPDATE MODE!</uib-alert>
+<!--<uib-alert ng-if="state === 'preview' || state === 'single_preview'" type="info">YOU ARE IN UPDATE MODE!</uib-alert>-->
+<div ng-if="state === 'preview' || state === 'single_preview'" class="top-bar">UPDATE MODE</div>
+
 <!-- BACK TO MAIN UPDATE PAGE -->
 <a ui-sref="update" ng-if="state === 'preview' || state === 'single_preview'" style="margin-left: 10px;"><span class="glyphicon glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back to edit</a>
 <!-- START OF SPACES PAGE -->

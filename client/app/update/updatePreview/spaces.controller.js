@@ -9,7 +9,8 @@ angular.module('irisBenadoArchitectsApp')
 		$scope.ifSpacesState = '.';
 
 		$scope.gridsterOpts = {
-			rowHeight: 50,
+			//defaultSizeY: 1,
+			columns: 18,
 			margins: [10,10]
 		};
 
@@ -24,6 +25,7 @@ angular.module('irisBenadoArchitectsApp')
 				}
 		} // else it is updateable by default
 
+		// load all pics per space if there's an id
 		if ($stateParams.id) {
 			// this is a preview of a single space
 			spacesService.getAllImagesForSpace($stateParams.id).then(function (res) {
@@ -35,10 +37,11 @@ angular.module('irisBenadoArchitectsApp')
 					col: 'item.col'
 				};
 
-				$scope.items = res;
+				//$scope.items = res;
+				$scope.items = _.filter(res, { 'before': false });
 
 			});
-		} else {
+		} else { // load only master pics per space
 			// this is a preview of the all spaces page
 			spacesService.loadAllSpaces1Pic().then(function (res) {
 				// different parameters for main view and for separate space view

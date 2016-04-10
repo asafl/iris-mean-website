@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('irisBenadoArchitectsApp')
-	.controller('UpdateCtrl', function ($scope, spacesService, Modal) {
+	.controller('UpdateCtrl', function ($scope, spacesService, Modal, $q) {
+
+		$scope.uploading = false;
 
 		spacesService.loadAllSpacesWithImages().then(function (res) {
 			$scope.spaces = res;
@@ -27,12 +29,37 @@ angular.module('irisBenadoArchitectsApp')
 		};
 
 		$scope.uploadFiles = function (files, space) {
+			console.log(files);
 			if (files && files.length) {
-				spacesService.uploadImages(space._id, files).then(function (res) {
-					res.data.forEach(function (image) {
-						console.log(image);
-						space.images.push(image);
+				//spacesService.uploadImages(space._id, files).then(function (res) {
+				//	res.data.forEach(function (image) {
+				//		space.images.push(image);
+				//	});
+				//});
+
+				var array_of_promises = [];
+				$scope.uploading = true;
+
+				// uploading file by file
+				files.forEach(function (file) {
+					// Preparing an array with the file - for the way it's handled in the server. FIX IN THE SERVER IF YOU WANT TO REMOVE THIS UGLY CODE
+					var file_ar = [];
+					file_ar.push(file);
+					// creating promise
+					var upload_promise = $q.defer();
+					array_of_promises.push(upload_promise.promise);
+
+					spacesService.uploadImages(space._id, file_ar).then(function (res) {
+						res.data.forEach(function (image) {
+							space.images.push(image);
+							upload_promise.resolve();
+						});
 					});
+				});
+
+				$q.all(array_of_promises).then(function () {
+					// change back from loading to regular
+					$scope.uploading = false;
 				});
 			}
 		};
@@ -61,6 +88,8 @@ angular.module('irisBenadoArchitectsApp')
 
 			// if it was turned off, do nothing (and anyway update)
 			spacesService.updateImageDetails(space._id, editedImage);
+			// reload spaces 1 pic to reload main image!
+			spacesService.actuallyLoadsSpaces1Pic();
 		};
 
 		$scope.beforeCheckboxChanged = function (space, editedImage) {

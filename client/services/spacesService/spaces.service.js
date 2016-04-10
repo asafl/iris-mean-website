@@ -14,12 +14,18 @@ angular.module('irisBenadoArchitectsApp')
 		});
 
 		// "Showcase"
-		var loadSpaces1PicPromise = $q.defer();
-		$http.get('/api/spaces/1pic').then(function (res) {
-			console.log("all spaces 1 pic");
-			spaces1Pic = res.data;
-			loadSpaces1PicPromise.resolve(spaces1Pic);
-		});
+		var loadSpaces1PicPromise;
+		function actuallyLoadsSpaces1Pic () {
+			loadSpaces1PicPromise = null;
+			loadSpaces1PicPromise = $q.defer();
+			$http.get('/api/spaces/1pic').then(function (res) {
+				console.log("all spaces 1 pic");
+				spaces1Pic = res.data;
+				loadSpaces1PicPromise.resolve(spaces1Pic);
+			});
+		}
+
+		actuallyLoadsSpaces1Pic();
 
 		// Spaces - return promises
 		var loadAllSpacesWithImages = function () {
@@ -113,6 +119,7 @@ angular.module('irisBenadoArchitectsApp')
 		return {
 			loadAllSpacesWithImages: loadAllSpacesWithImages,
 			loadAllSpaces1Pic: loadAllSpaces1Pic,
+			actuallyLoadsSpaces1Pic: actuallyLoadsSpaces1Pic,
 			loadSpace: loadSpace,
 			createSpace: createSpace,
 			updateSpace: updateSpace,
