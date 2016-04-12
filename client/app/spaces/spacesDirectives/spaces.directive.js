@@ -16,4 +16,14 @@ angular.module('irisBenadoArchitectsApp')
 				}, true);
 			}
 		};
+	})
+	.directive('beforeBackground', function ($timeout) {
+		return {
+			restrict: 'A',
+			link: function (scope, element) {
+				$timeout(function () {
+					element.attr('style', 'height: ' + $(element).parent().height() + 'px');
+				},0);
+			}
+		};
 	});

@@ -45,4 +45,12 @@ angular.module('irisBenadoArchitectsApp')
 
 		// to prevent error from gridster item (this code normally would handle moving and resizing of tiles of the gridster).
 		$scope.updateImage = function () { };
+
+		// close before pane as a function to be used in many places
+		$scope.closeBeforePane = function () {
+			$('.before-pics').addClass('slideOutUp');
+
+			// fade out background
+			$('.all-screen-before-bg').animate({opacity: 0}, 500, 'linear', function() {$('.all-screen-before-bg').css({display: 'none'});});
+		}
 	});

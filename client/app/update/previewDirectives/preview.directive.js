@@ -22,9 +22,17 @@ angular.module('irisBenadoArchitectsApp')
 				element.bind('click', function () {
 					if ($('.before-pics').hasClass('slideOutUp')) { // it's out of view - show it
 						$('.before-pics').removeClass('slideOutUp').css('display', 'block').addClass('slideInDown');
+
+						// fade in background
+						$('.all-screen-before-bg').css({display: 'block'}).animate({opacity: 1}, 500);
+
 					} else { // it's currently shown, hide it
-						$('.before-pics').addClass('slideOutUp');
+						scope.closeBeforePane();
 					}
+				});
+
+				$('.all-screen-before-bg').click(function () {
+					scope.closeBeforePane();
 				});
 			}
 		};
@@ -35,7 +43,7 @@ angular.module('irisBenadoArchitectsApp')
 			link: function (scope, element, attrs) {
 				element.bind('click', function () {
 					element.bind('mouseleave', function () {
-						$('.before-pics').addClass('slideOutUp');
+						scope.closeBeforePane();
 					});
 				});
 			}
