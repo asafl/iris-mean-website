@@ -29,7 +29,6 @@ angular.module('irisBenadoArchitectsApp')
 		};
 
 		$scope.uploadFiles = function (files, space) {
-			console.log(files);
 			if (files && files.length) {
 				//spacesService.uploadImages(space._id, files).then(function (res) {
 				//	res.data.forEach(function (image) {

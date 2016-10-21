@@ -6,7 +6,10 @@
 <a ui-sref="update" ng-if="state === 'preview' || state === 'single_preview'" style="margin-left: 10px;"><span class="glyphicon glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back to edit</a>
 <!-- START OF SPACES PAGE -->
 <div class="col-md-12">
-    <section class="row spaces-main">
+    <section class="row spaces-main" ng-class="(state === 'preview' || state === 'single_preview')? 'bottom-padding': ''">
+        <div class="pics-loading col-xs-12" ng-if="items.length == 0">
+            <h2 style="font-size: 2.3em"><img src="../../assets/images/box.gif" style="height: 40px;"> Please hang on, we're getting the spaces from the server!</h2>
+        </div>
         <div gridster="gridsterOpts">
             <ul>
                 <li gridster-item="customItemMap" id="{{item._id}}" class="gridster-card" ng-class="(state === 'spaces' || state === 'single_space')? 'pointer' : ''" ng-repeat="item in items" show-space-name-on-hover hover-item-class="overlay-text" ui-sref="{{ifSpacesState}}">

@@ -10,7 +10,7 @@ angular.module('irisBenadoArchitectsApp')
 
 		$scope.gridsterOpts = {
 			//defaultSizeY: 1,
-			columns: 18,
+			columns: 40,
 			margins: [10,10]
 		};
 
@@ -23,7 +23,7 @@ angular.module('irisBenadoArchitectsApp')
 			$scope.gridsterOpts["draggable"] = {
 					enabled: false
 				}
-		} // else it is updateable by default
+		} // else it is updatable by default
 
 		// load all pics per space if there's an id
 		if ($stateParams.id) {
@@ -53,14 +53,18 @@ angular.module('irisBenadoArchitectsApp')
 				};
 
 				res.forEach(function (space) {
-					// add the SPACE id and name to each separate images object
-					space.images[0].spaceId = space._id; // ['spaceId']
-					space.images[0].spaceName = space.name; // ['spaceName']
-					$scope.items.push(space.images[0]);
+					if (space.images != undefined) {
+						if (space.images.length > 0) {
+							// add the SPACE id and name to each separate images object
+							space.images[0].spaceId = space._id; // ['spaceId']
+							space.images[0].spaceName = space.name; // ['spaceName']
+							$scope.items.push(space.images[0]);
 
-					// if it's the spaces state: assign link
-					if ($scope.state === 'spaces') { // only if in spaces state (and not in preview mode)
-						$scope.ifSpacesState = 'single_space({id: item.spaceId })';
+							// if it's the spaces state: assign link
+							if ($scope.state === 'spaces') { // only if in spaces state (and not in preview mode)
+								$scope.ifSpacesState = 'single_space({id: item.spaceId })';
+							}
+						}
 					}
 				});
 			});

@@ -5,13 +5,28 @@ angular.module('irisBenadoArchitectsApp')
 		var allSpaces = [];
 		var spaces1Pic = [];
 
-		// load data upon service load
-		var loadSpacesPromise = $q.defer();
-		$http.get('/api/spaces').then(function (res) {
-			console.log("loaded all spaces");
-			allSpaces = res.data;
-			loadSpacesPromise.resolve(allSpaces);
-		});
+		//// load data upon service load
+		//var loadSpacesPromise = $q.defer();
+		//$http.get('/api/spaces').then(function (res) {
+		//	console.log("loaded all spaces");
+		//	allSpaces = res.data;
+		//	loadSpacesPromise.resolve(allSpaces);
+		//});
+		//
+		//var loadAllSpacesWithImages = function () {
+		//	return loadSpacesPromise.promise;
+		//};
+
+		var loadAllSpacesWithImages = function () {
+			var loadSpacesPromise = $q.defer();
+			$http.get('/api/spaces').then(function (res) {
+				console.log("loaded all spaces");
+				allSpaces = res.data;
+				loadSpacesPromise.resolve(allSpaces);
+			});
+
+			return loadSpacesPromise.promise;
+		};
 
 		// "Showcase"
 		var loadSpaces1PicPromise;
@@ -28,9 +43,6 @@ angular.module('irisBenadoArchitectsApp')
 		actuallyLoadsSpaces1Pic();
 
 		// Spaces - return promises
-		var loadAllSpacesWithImages = function () {
-			return loadSpacesPromise.promise;
-		};
 
 		var loadAllSpaces1Pic = function () {
 			return loadSpaces1PicPromise.promise;
@@ -83,6 +95,28 @@ angular.module('irisBenadoArchitectsApp')
 			return imagesForSpacePromise[spaceId].promise;
 		};
 
+		// Returns an array of promises, one for each pic
+		var getAllImagesForSpaceOneByOne = function (spaceId) {
+			// prepare promise
+			var prom = $q.defer();
+
+			// get all image id's and prepare array prepare array of promises for each image, resolve promise with array.
+			$http.get('/api/spaces/' + spaceId + '/imageIDs').then(function (res) {
+				var spaceImagesPromisesArray = [];
+
+				_.forEach(res.data.imageIDs, function (imageId) {
+					spaceImagesPromisesArray.push($http.get('/api/spaces/' + spaceId + '/im?imId=' + imageId))
+				});
+
+				var spaceDetails = res.data;
+				spaceDetails["spaceImagePromises"] = spaceImagesPromisesArray;
+
+				prom.resolve(spaceDetails);
+			});
+
+			return prom.promise;
+		};
+
 		var uploadImages = function (spaceId, imagesToUpload) {
 			return Upload.upload({
 				url: '/api/spaces/' + spaceId + '/im',
@@ -125,6 +159,7 @@ angular.module('irisBenadoArchitectsApp')
 			updateSpace: updateSpace,
 			deleteSpace: deleteSpace,
 			getAllImagesForSpace: getAllImagesForSpace,
+			getAllImagesForSpaceOneByOne: getAllImagesForSpaceOneByOne,
 			updateImageDetails: updateImageDetails,
 			uploadImages: uploadImages,
 			deleteImage: deleteImage,

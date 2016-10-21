@@ -15,6 +15,7 @@ angular.module('irisBenadoArchitectsApp', [
 			.otherwise('/spaces');
 
 		$locationProvider.html5Mode(true);
+
 	})
 	.config(function (LightboxProvider) {
 		//LightboxProvider.templateUrl = '../components/lightbox/lightbox.html'; USED INLINE IN FILE INSTEAD

@@ -1,8 +1,11 @@
 <div class="col-md-2 space-details" height-to-window>
     <section class="top-texts">
         <h1 class="space-title">{{space.name}}</h1>
-        <h4 ng-if="space.credits.length > 0"><strong>CREDITS&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{space.credits}}</h4>
-        <a class="show-before pointer" show-before-pane ng-if="beforeImages.length > 0">Show before pictures</a>
+        <h4 ng-if="space.credits.length > 0">{{space.credits}}</h4> <!-- <strong>CREDITS&nbsp;&nbsp;|&nbsp;&nbsp;</strong> -->
+        <a class="show-before pointer" show-before-pane ng-if="beforeImages.length > 0" ng-switch="beforeOpen" ng-click="beforeOpen = !beforeOpen">
+            <span ng-switch-when="false">Show before pictures</span>
+            <span ng-switch-when="true">Hide before pictures</span>
+        </a>
         <p class="about">{{space.about}}</p>
     </section>
     <!--<section class="bottom-texts">-->
@@ -10,35 +13,46 @@
     <!--</section>-->
 </div>
 <div class="col-md-10 col-md-offset-2">
-    <div class="all-screen-before-bg"></div>
+    <!--<section class="row">-->
+        <div class="col-sm-12">
+            <div class="all-screen-before-bg"></div>
+        </div>
+    <!--</section>-->
+
     <!-- BEFORE PICS SECTION -->
-    <div class="col-sm-offset-2 col-sm-10 before-pics animated slideOutUp">
-        <div class="close pointer" hide-before-pane>X</div>
-        <section class="row">
-            <div class="img-frame col-sm-2" ng-repeat="image in beforeImages" ng-click="openLightboxModal(beforeImages, $index)">
-                <div class="img-crop">
-                    <img ng-src="data:image/jpeg;base64, {{image.img}}" alt=""/>
+    <section class="row">
+        <div class="col-sm-offset-2 col-sm-10 before-pics animated slideOutUp">
+            <div class="close pointer" hide-before-pane style="margin-right: 15px; z-index: 50">X</div>
+            <!--<section class="row">-->
+                <div class="img-frame col-xs-3" ng-repeat="image in beforeImages" ng-click="openLightboxModal(beforeImages, $index)">
+                    <div class="img-crop">
+                        <img ng-src="data:image/jpeg;base64, {{image.img}}" alt=""/>
+                    </div>
                 </div>
-            </div>
-        </section>
-    </div>
+            <!--</section>-->
+        </div>
+    </section>
+
     <!-- REGULAR (AFTER PICS SECTION) -->
     <section class="row">
-        <div class="col-md-12">
-            <section class="row spaces-main">
-                <div gridster="gridsterOpts">
-                    <ul>
-                        <li gridster-item="customItemMap" class="gridster-card pointer"
-                            ng-repeat="image in afterImages" ng-click="openLightboxModal(afterImages, $index)">
-                            <div class="img-frame">
-                                <div class="img-crop">
-                                    <img ng-src="data:image/jpeg;base64, {{image.img}}" alt=""/>
-                                </div>
+        <div class="col-md-12 spaces-main">
+            <!--<section class="row spaces-main">-->
+            <div class="pics-loading" ng-if="afterImages.length == 0">
+                <h2><img src="../../assets/images/box.gif" style="height: 40px;"> please wait while we look for <span style="color: darkred">{{space.name}}</span> pics in our servers!</h2>
+            </div>
+            <div gridster="gridsterOpts">
+                <ul>
+                    <li gridster-item="customItemMap" class="gridster-card pointer"
+                        ng-repeat="image in afterImages" ng-click="openLightboxModal(afterImages, $index)">
+                        <div class="img-frame">
+                            <div class="img-crop">
+                                <img ng-src="data:image/jpeg;base64, {{image.img}}" alt=""/>
                             </div>
-                        </li>
-                    </ul>
-                </div>
-            </section>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--</section>-->
         </div>
 
     </section>

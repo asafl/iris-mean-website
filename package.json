@@ -16,7 +16,7 @@
     "express-session": "~1.0.2",
     "image-min": "^0.3.2",
     "imagemin-jpegtran": "^4.3.2",
-    "lodash": "~2.4.1",
+    "lodash": "^4.13.1",
     "lwip": "0.0.8",
     "method-override": "~1.0.0",
     "mongoose": "~4.0.3",

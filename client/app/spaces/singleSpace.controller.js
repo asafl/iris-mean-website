@@ -11,19 +11,22 @@ angular.module('irisBenadoArchitectsApp')
 			draggable: {
 				enabled: false
 			},
-			columns: 18,
-			margins: [10,10],
+			columns: 40,
+			margins: [10,10]
 		};
 
+		$scope.beforeOpen = false;
 
 		$scope.$on('gridster-resized', function(sizes, gridster) {
 			// adjust sizes
 
 		});
 
-		// this is a showcase of all pics a single space - THIS IS NOT A PREVIEW CONTROLLER
-		spacesService.loadAllSpacesWithImages().then(function (res) {
+		$scope.afterImages = [];
+		$scope.beforeImages = [];
 
+		// Loading images one by one
+		spacesService.getAllImagesForSpaceOneByOne($stateParams.id).then(function (spaceDetails) {
 			// different parameters for main view a for separate space view (one's position and sizes for all spaces, the other for single)
 			$scope.customItemMap = {
 				sizeX: 'image.sizeX',
@@ -32,11 +35,19 @@ angular.module('irisBenadoArchitectsApp')
 				col: 'image.col'
 			};
 
-			//$scope.space = res;
-			$scope.space = _.find(res, { _id: $stateParams.id});
+			$scope.space = spaceDetails;
 
-			$scope.afterImages = _.filter($scope.space.images, { 'before': false });
-			$scope.beforeImages = _.filter($scope.space.images, { 'before': true });
+			// Registering an callback for each image promise (push into appropriate images array)
+			_.forEach(spaceDetails.spaceImagePromises, function (imPromise) {
+				// After loading all image ids, load images one by one
+				imPromise.then(function (res) {
+					if (res.data.before == true) {
+						$scope.beforeImages.push(res.data);
+					} else {
+						$scope.afterImages.push(res.data);
+					}
+				});
+			});
 		});
 
 		$scope.openLightboxModal = function (array, index) {
@@ -52,5 +63,26 @@ angular.module('irisBenadoArchitectsApp')
 
 			// fade out background
 			$('.all-screen-before-bg').animate({opacity: 0}, 500, 'linear', function() {$('.all-screen-before-bg').css({display: 'none'});});
+
 		}
 	});
+
+//// this is a showcase of all pics a single space - THIS IS NOT A PREVIEW CONTROLLER
+//spacesService.loadAllSpacesWithImages().then(function (res) {
+//
+//	// different parameters for main view a for separate space view (one's position and sizes for all spaces, the other for single)
+//	$scope.customItemMap = {
+//		sizeX: 'image.sizeX',
+//		sizeY: 'image.sizeY',
+//		row: 'image.row',
+//		col: 'image.col'
+//	};
+//
+//	//$scope.space = res;
+//	$scope.space = _.find(res, { _id: $stateParams.id});
+//
+//	$scope.afterImages = _.filter($scope.space.images, { 'before': false });
+//	$scope.beforeImages = _.filter($scope.space.images, { 'before': true });
+//});
+
+

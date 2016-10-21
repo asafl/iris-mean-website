@@ -30,8 +30,11 @@
     </div>
 
     <!-- image -->
-    <img ng-if="!Lightbox.isVideo(Lightbox.image)"
-        lightbox-src="{{Lightbox.imageUrl}}">
+    <div ng-if="!Lightbox.isVideo(Lightbox.image)">
+      <h2 class="side-arrow">›</h2>
+      <h2 class="side-arrow">‹</h2>
+      <img lightbox-src="{{Lightbox.imageUrl}}">
+    </div>
 
     <!-- video -->
     <div ng-if="Lightbox.isVideo(Lightbox.image)"

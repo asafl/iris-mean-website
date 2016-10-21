@@ -18,6 +18,7 @@ router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);
 
 // deal with images directly
+router.get('/:id/imageIDs', controller.getAllSpaceImagesIdsWithDetails);
 router.get('/:id/im', controller.getImage);
 router.post('/:id/im', multipartyMiddleware, controller.addImage);
 router.put('/:id/im', controller.updateImage);
