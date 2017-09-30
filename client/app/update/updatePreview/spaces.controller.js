@@ -2,7 +2,7 @@
 
 angular.module('irisBenadoArchitectsApp')
 	.controller('SpacesCtrl', function ($scope, $stateParams, spacesService, $state, $timeout) {
-		// USED FOR: ALL SPACES, ALL SPACES PREVIEW, SINGLE SPACE PREVIEW (STRANGE)
+		// USED FOR: ALL SPACES, ALL SPACES PREVIEW, SINGLE SPACE PREVIEW (STRANGE, BUT IT'S BECAUSE THERE'S NO SIDE MENU)
 
 		$scope.items = [];
 		$scope.state = $state.current.name;
@@ -11,7 +11,8 @@ angular.module('irisBenadoArchitectsApp')
 		$scope.gridsterOpts = {
 			//defaultSizeY: 1,
 			columns: 40,
-			margins: [10,10]
+			margins: [10,10],
+			maxRows: 800
 		};
 
 		// set updatability depending on if we're in preview mode or in prod mode (depending of the url)
@@ -27,7 +28,10 @@ angular.module('irisBenadoArchitectsApp')
 
 		// load all pics per space if there's an id
 		if ($stateParams.id) {
-			// this is a preview of a single space
+			// We have to run this so that the next function works.
+			spacesService.loadAllSpacesWithImages();
+
+			// this is a preview of a single space (in update mode!)
 			spacesService.getAllImagesForSpace($stateParams.id).then(function (res) {
 				// different parameters for main view and for separate space view
 				$scope.customItemMap = {

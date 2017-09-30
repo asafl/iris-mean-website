@@ -12,7 +12,8 @@ angular.module('irisBenadoArchitectsApp')
 				enabled: false
 			},
 			columns: 40,
-			margins: [10,10]
+			margins: [10,10],
+			maxRows: 800
 		};
 
 		$scope.beforeOpen = false;
@@ -26,7 +27,32 @@ angular.module('irisBenadoArchitectsApp')
 		$scope.beforeImages = [];
 
 		// Loading images one by one
-		spacesService.getAllImagesForSpaceOneByOne($stateParams.id).then(function (spaceDetails) {
+		//spacesService.getAllImagesForSpaceOneByOne($stateParams.id).then(function (spaceDetails) {
+		//	// different parameters for main view a for separate space view (one's position and sizes for all spaces, the other for single)
+		//	$scope.customItemMap = {
+		//		sizeX: 'image.sizeX',
+		//		sizeY: 'image.sizeY',
+		//		row: 'image.row',
+		//		col: 'image.col'
+		//	};
+		//
+		//	$scope.space = spaceDetails;
+		//
+		//	// Registering a callback for each image promise (push into appropriate images array)
+		//	_.forEach(spaceDetails.spaceImagePromises, function (imPromise) {
+		//		// After loading all image ids, load images one by one
+		//		imPromise.then(function (res) {
+		//			if (res.data.before == true) {
+		//				$scope.beforeImages.push(res.data);
+		//			} else {
+		//				$scope.afterImages.push(res.data);
+		//			}
+		//		});
+		//	});
+		//});
+
+		// Loading all space at once (takes longer, but works)
+		spacesService.loadSpace($stateParams.id).then(function (space) {
 			// different parameters for main view a for separate space view (one's position and sizes for all spaces, the other for single)
 			$scope.customItemMap = {
 				sizeX: 'image.sizeX',
@@ -35,19 +61,11 @@ angular.module('irisBenadoArchitectsApp')
 				col: 'image.col'
 			};
 
-			$scope.space = spaceDetails;
+			$scope.space = space.data;
 
-			// Registering an callback for each image promise (push into appropriate images array)
-			_.forEach(spaceDetails.spaceImagePromises, function (imPromise) {
-				// After loading all image ids, load images one by one
-				imPromise.then(function (res) {
-					if (res.data.before == true) {
-						$scope.beforeImages.push(res.data);
-					} else {
-						$scope.afterImages.push(res.data);
-					}
-				});
-			});
+			// Copy images to appropriate places.
+			$scope.afterImages  = _.filter($scope.space.images, { 'before': false });
+			$scope.beforeImages = _.filter($scope.space.images, { 'before': true });
 		});
 
 		$scope.openLightboxModal = function (array, index) {

@@ -17,15 +17,18 @@ angular.module('irisBenadoArchitectsApp')
 		//	return loadSpacesPromise.promise;
 		//};
 
+		var loadAllSpacesPromise;
 		var loadAllSpacesWithImages = function () {
-			var loadSpacesPromise = $q.defer();
-			$http.get('/api/spaces').then(function (res) {
-				console.log("loaded all spaces");
-				allSpaces = res.data;
-				loadSpacesPromise.resolve(allSpaces);
-			});
+			if (!loadAllSpacesPromise) {
+				loadAllSpacesPromise = $q.defer();
+				$http.get('/api/spaces').then(function (res) {
+					console.log("loaded all spaces");
+					allSpaces = res.data;
+					loadAllSpacesPromise.resolve(allSpaces);
+				});
+			}
 
-			return loadSpacesPromise.promise;
+			return loadAllSpacesPromise.promise;
 		};
 
 		// "Showcase"
@@ -33,6 +36,7 @@ angular.module('irisBenadoArchitectsApp')
 		function actuallyLoadsSpaces1Pic () {
 			loadSpaces1PicPromise = null;
 			loadSpaces1PicPromise = $q.defer();
+			console.log("promise ready");
 			$http.get('/api/spaces/1pic').then(function (res) {
 				console.log("all spaces 1 pic");
 				spaces1Pic = res.data;
@@ -43,24 +47,33 @@ angular.module('irisBenadoArchitectsApp')
 		actuallyLoadsSpaces1Pic();
 
 		// Spaces - return promises
-
 		var loadAllSpaces1Pic = function () {
 			return loadSpaces1PicPromise.promise;
 		};
 
 		var loadSpacePromise = {};
+		//// This will get the space from the all spaces, if all spaces were already preloaded.
+		//var loadSpaceIfPreloaded = function (spaceId) {
+		//	if (!loadSpacePromise[spaceId]) { // if an entry for this space wasn't created yet- create it and return promise
+		//		loadSpacePromise[spaceId] = $q.defer();
+		//
+		//		loadAllSpacesPromise.promise.then(function (spaces) {
+		//			var space = _.find(spaces, { _id: spaceId });
+		//			loadSpacePromise[spaceId].resolve(space);
+		//		});
+		//	}
+		//
+		//	// return promise while waiting for other promise
+		//	return loadSpacePromise[spaceId].promise;
+		//};
+
+		// Actually gets the spaces from the server, returns a promise that can be "thened".
 		var loadSpace = function (spaceId) {
 			if (!loadSpacePromise[spaceId]) { // if an entry for this space wasn't created yet- create it and return promise
-				loadSpacePromise[spaceId] = $q.defer();
-
-				loadSpacesPromise.promise.then(function (spaces) {
-					var space = _.find(spaces, { _id: spaceId });
-					loadSpacePromise[spaceId].resolve(space);
-				});
+				loadSpacePromise[spaceId] = $http.get('/api/spaces/' + spaceId);
 			}
 
-			// return promise while waiting for other promise
-			return loadSpacePromise[spaceId].promise;
+			return loadSpacePromise[spaceId];
 		};
 
 		var createSpace = function () {
@@ -85,7 +98,7 @@ angular.module('irisBenadoArchitectsApp')
 			if (!imagesForSpacePromise[spaceId]) { // if an entry for this space wasn't created yet- create it and return promise
 				imagesForSpacePromise[spaceId] = $q.defer();
 
-				loadSpacesPromise.promise.then(function (spaces) {
+				loadAllSpacesPromise.promise.then(function (spaces) {
 					var images = _.find(spaces, { '_id': spaceId }).images;
 					imagesForSpacePromise[spaceId].resolve(images);
 				});
@@ -95,7 +108,7 @@ angular.module('irisBenadoArchitectsApp')
 			return imagesForSpacePromise[spaceId].promise;
 		};
 
-		// Returns an array of promises, one for each pic
+		// Returns details of the space, with an array of promises, one for each pic
 		var getAllImagesForSpaceOneByOne = function (spaceId) {
 			// prepare promise
 			var prom = $q.defer();

@@ -41,6 +41,7 @@ exports.spacesShowcase = function (req, res) {
 		}
 
 		_.forEach(spaces, function (space) {
+			console.log(space.name);
 			var space_images = _.find(space.images, {'main': true});
 
 			if (!space_images) { // if no main image, get first image

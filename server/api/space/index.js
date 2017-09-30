@@ -9,7 +9,7 @@ var router = express.Router();
 var multiparty = require('connect-multiparty');
 var multipartyMiddleware = multiparty();
 
-router.get('/', controller.index);
+router.get('/', controller.index); // gets all spaces with all images (crazy)
 router.get('/1pic', controller.spacesShowcase);
 router.get('/:id', controller.show); // get a space with all images
 router.post('/', controller.create);
